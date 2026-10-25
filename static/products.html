@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Image Hosting</title>
+</head>
+<body>
+
+    <nav>
+    <a href="/">Home</a> |
+    <a href="/about">About</a> |
+    <a href="/products">Products</a>
+</nav>
+
+    <h1>Upload an image</h1>
+
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="image" accept=".jpg,.png,.gif">
+        <button type="submit">Upload</button>
+    </form>
+</body>
+</html>

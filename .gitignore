@@ -1,0 +1,19 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+
+images/*
+logs/*
+
+.idea/
+
+# Database backups
+backups/
+
+# Local database files
+db_data/
+
+# Local test files and user data
+test.jpg
+users.json
