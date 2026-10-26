@@ -112,11 +112,39 @@ Python и Nginx отдельно устанавливать не требует�
 
 1. Откройте терминал в корневой папке проекта.
 
-2. Соберите образы и запустите контейнеры:
+2. Подготовьте файлы конфигурации.
 
-```bash
-docker compose up --build
-```
+   Создайте файл `.env` на основе `.env.example`:
+
+   ```powershell
+   Copy-Item .env.example .env
+   ```
+
+   Откройте файл `.env` и замените `your_password_here` собственным паролем PostgreSQL:
+
+   ```dotenv
+   DB_PASSWORD=your_password_here
+   ```
+
+   Создайте файл `users.json` на основе `users.example.json`:
+
+   ```powershell
+   Copy-Item users.example.json users.json
+   ```
+
+   Изначально файл `users.json` содержит пустой список `[]`.
+   Данные, введённые в форму на главной странице, сохраняются в этот файл.
+
+   **Важно:** файлы `.env` и `users.json` не публикуются на GitHub,
+   поскольку могут содержать конфиденциальные данные.
+
+   Команды `Copy-Item` предназначены для PowerShell в Windows.
+
+3. Соберите образы и запустите контейнеры:
+
+   ```bash
+   docker compose up -d --build
+   ```
 
 После запуска приложение доступно по адресам:
 
