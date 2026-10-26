@@ -31,6 +31,35 @@ def get_db_connection():
         port=5432
     )
 
+
+def init_db():
+    conn = get_db_connection()
+
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS images (
+                    id SERIAL PRIMARY KEY,
+                    filename TEXT NOT NULL,
+                    original_name TEXT NOT NULL,
+                    size BIGINT NOT NULL,
+                    upload_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    file_type TEXT NOT NULL
+                )
+            """)
+
+        conn.commit()
+        logging.info("DATABASE: Table images is ready")
+
+    except Exception:
+        conn.rollback()
+        logging.exception("DATABASE_ERROR: Failed to initialize database")
+        raise
+
+    finally:
+        conn.close()
+
+
 def save_metadata(filename, original_name, size, file_type):
     conn = get_db_connection()
 
@@ -397,8 +426,13 @@ class ImageHostingHandler(BaseHTTPRequestHandler):
         self.end_headers()
 
 
-server = ThreadingHTTPServer(("0.0.0.0", 8000), ImageHostingHandler)
+if __name__ == "__main__":
+    init_db()
 
-print("Server started at http://localhost:8000")
+    server = ThreadingHTTPServer(
+        ("0.0.0.0", 8000),
+        ImageHostingHandler
+    )
 
-server.serve_forever()
+    print("Server started at http://localhost:8000")
+    server.serve_forever()
