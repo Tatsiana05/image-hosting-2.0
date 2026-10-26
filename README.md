@@ -1,4 +1,4 @@
-# Image Hosting Server
+# Image Hosting Server 2.0
 
 ## Описание проекта
 
@@ -138,13 +138,21 @@ Python и Nginx отдельно устанавливать не требует�
    **Важно:** файлы `.env` и `users.json` не публикуются на GitHub,
    поскольку могут содержать конфиденциальные данные.
 
-   Команды `Copy-Item` предназначены для PowerShell в Windows.
+   **Примечание:** команды `Copy-Item` предназначены для Windows PowerShell. В Linux и macOS вместо `Copy-Item` используется команда `cp`:
+
+```bash
+cp .env.example .env
+cp users.example.json users.json
+```
+
 
 3. Соберите образы и запустите контейнеры:
 
    ```bash
    docker compose up -d --build
    ```
+
+При первом запуске приложения таблица images автоматически создаётся в PostgreSQL, если она ещё не существует. Ручная настройка структуры базы данных не требуется.
 
 После запуска приложение доступно по адресам:
 
